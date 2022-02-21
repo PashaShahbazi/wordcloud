@@ -1,18 +1,18 @@
 """This main script is for generating a word cloud from the
 word you search for on Wikipedia or a text in a "txt" format that you have prepared yourself.
 """
+
 # Import needed packages
 from tkinter.filedialog import askopenfile, asksaveasfile
+
 import re
-import numpy as np
-import wordcloud
-import make_plot
-import get_wiki as gw
-import get_wiki as w
-import create_wordcloud as cw
 import matplotlib.pyplot as mat
-import make_plot as plt
+import numpy as np
 from PIL import Image
+
+import create_wordcloud as cw
+import get_wiki as gw
+import make_plot as plt
 
 wiki_or_file = input('Do you have a text file or do you want to search about a subject?\
 \nenter f for file or w for Wikipedia--> ')
