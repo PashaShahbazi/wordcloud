@@ -61,4 +61,5 @@ elif mask_or_not.lower() == 'y':
     cloud.to_file(save_path)
     print('word cloud created!')
 else:
-    pass
+    print('Your answer is unknown')
+    quit()
