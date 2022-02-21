@@ -29,3 +29,5 @@ elif wiki_or_file.lower() == 'w':
 else:
     print('Your answer is unknown')
     quit()
+text = re.sub(r'==.*?==+', '', text)
+text = text.replace('\n', '')
