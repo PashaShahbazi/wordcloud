@@ -21,4 +21,8 @@ if wiki_or_file.lower() == 'f':
     text = ''
     for i in text1:
         text += i
-
+elif wiki_or_file.lower() == 'w':
+    wiki = input('Enter your subject--> ')
+else:
+    print('Your answer is unknown')
+    quit()
