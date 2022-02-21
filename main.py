@@ -19,6 +19,7 @@ wiki_or_file = input('Do you have a text file or do you want to search about a s
 if wiki_or_file.lower() == 'f':
     text = askopenfile(mode='r', title='Where is your file txt')
     text = re.findall("[a-z A-Z]:.*t", str(text))
+    # making text str type
     text1 = open(text[0]).readlines()
     text = ''
     for i in text1:
@@ -31,3 +32,12 @@ else:
     quit()
 text = re.sub(r'==.*?==+', '', text)
 text = text.replace('\n', '')
+mask_or_not = input('Do you want the text to be in a specific photo? \nThe rule is that the photo \
+must be black and white and in PNG format-->(y/n)')
+background_color = input('What color do you want for back grand -->')
+if mask_or_not.lower() == 'n':
+    pass
+elif mask_or_not.lower() == 'y':
+    pass
+else:
+    pass
