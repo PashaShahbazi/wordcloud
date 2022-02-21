@@ -9,7 +9,7 @@ import wordcloud
 
 import get_wiki as gw
 import get_wiki as w
-import creat_wordcloud as cw
+import create_wordcloud as cw
 import matplotlib.pyplot as mat
 import make_plot
 from PIL import Image
