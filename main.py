@@ -38,7 +38,7 @@ background_color = input('What color do you want for back grand -->')
 if mask_or_not.lower() == 'n':
     print('Please wait.....')
     # get the path of return image with tkinter
-    save_path = asksaveasfile(title='where you want to save?')
+    save_path = asksaveasfile(title='Where you want to save?')
     save_path = save_path + '.jpg'
     # create the wordcloud from script create_wordcloud.py
     cloud = cw.create_cloud(text, bgcolor=background_color)
@@ -50,6 +50,15 @@ if mask_or_not.lower() == 'n':
     cloud.to_file(save_path.name)
     print('word cloud created!')
 elif mask_or_not.lower() == 'y':
-    pass
+    # ask for image path for open it for wordcloud
+    image = Image.open(askopenfile(title='Where the image you want to use').name)
+    mask = np.array(image)
+    save_path = asksaveasfile(title='Where you want to save?')
+    print('Please wait.....')
+    cloud = cw.create_cloud_mask(text=text, bgcolor=background_color, mask=mask)
+    plt.plot_cloud(cloud)
+    mat.show()
+    cloud.to_file(save_path)
+    print('word cloud created!')
 else:
     pass
