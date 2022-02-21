@@ -6,6 +6,8 @@ from tkinter.filedialog import askopenfile, asksaveasfile
 import re
 import numpy as np
 import wordcloud
+
+import get_wiki as gw
 import get_wiki as w
 import creat_wordcloud as cw
 import matplotlib.pyplot as mat
@@ -13,7 +15,7 @@ import make_plot
 from PIL import Image
 
 wiki_or_file = input('Do you have a text file or do you want to search about a subject?\
-enter f for file or w for Wikipedia--> ')
+\nenter f for file or w for Wikipedia--> ')
 if wiki_or_file.lower() == 'f':
     text = askopenfile(mode='r', title='Where is your file txt')
     text = re.findall("[a-z A-Z]:.*t", str(text))
@@ -23,6 +25,7 @@ if wiki_or_file.lower() == 'f':
         text += i
 elif wiki_or_file.lower() == 'w':
     wiki = input('Enter your subject--> ')
+    text = gw.wiki_get(wiki)
 else:
     print('Your answer is unknown')
     quit()
