@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0f5a0657-3f6d-41d9-8dce-339af276a8c1" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="25NsyMOvgCyDDrfwF630FuijDeR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../tutorials/programing_tutorial/Git" />
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="get_wiki" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wordcloud" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\pasha\anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/get_wiki.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="wordcloud" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\pasha\anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="the_meanwordcloud" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wordcloud" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\pasha\anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../tutorials/programing_tutorial/Crash_Course_on_Python/word_cluod" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../tutorials/programing_tutorial/Crash_Course_on_Python/word_cluod/the_meanwordcloud.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.get_wiki" />
+      <item itemvalue="Python.the_meanwordcloud" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.the_meanwordcloud" />
+        <item itemvalue="Python.get_wiki" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0f5a0657-3f6d-41d9-8dce-339af276a8c1" name="Changes" comment="" />
+      <created>1645379134966</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1645379134966</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Just make the main of project and add a comment">
+      <created>1645387819937</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1645387819937</updated>
+    </task>
+    <task id="LOCAL-00002" summary="making the script 2 for the project">
+      <created>1645444323423</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1645444323423</updated>
+    </task>
+    <task id="LOCAL-00003" summary="making the script get wiki and making plot for the project">
+      <created>1645445304167</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1645445304168</updated>
+    </task>
+    <task id="LOCAL-00004" summary="importing the packages and  ask for file or subject to make wordcloud">
+      <created>1645448164848</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1645448164848</updated>
+    </task>
+    <task id="LOCAL-00005" summary="write if and elif and else is for creating wordcloud text">
+      <created>1645448478512</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1645448478512</updated>
+    </task>
+    <task id="LOCAL-00006" summary="creating script for geting text from wikipedia">
+      <created>1645448984157</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1645448984157</updated>
+    </task>
+    <task id="LOCAL-00007" summary="using the get_wiki script for get the text from wikipedia">
+      <created>1645449231116</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1645449231116</updated>
+    </task>
+    <task id="LOCAL-00008" summary="rename the file creat_wordcloud.py">
+      <created>1645450144507</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1645450144507</updated>
+    </task>
+    <task id="LOCAL-00009" summary="rename the file create_wordcloud.py">
+      <created>1645450172231</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1645450172231</updated>
+    </task>
+    <task id="LOCAL-00010" summary="remove the \n and punctuations and uninteresting words">
+      <created>1645452704711</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1645452704711</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Wrote the mask or not for getting image or not and wrote the if and elif and else">
+      <created>1645453680687</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1645453680687</updated>
+    </task>
+    <task id="LOCAL-00012" summary="complete the part that if the user didn't want to mask wordcloud and made the part that we make plot for the wordcloud">
+      <created>1645454393727</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1645454393727</updated>
+    </task>
+    <task id="LOCAL-00013" summary="complete the part that if the user want to mask wordcloud">
+      <created>1645455356087</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1645455356087</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add the else if user say anything else for answer y or n">
+      <created>1645455470579</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1645455470579</updated>
+    </task>
+    <task id="LOCAL-00015" summary="beautify the code">
+      <created>1645455607762</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1645455607762</updated>
+    </task>
+    <task id="LOCAL-00016" summary="beautify the code">
+      <created>1645455635336</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1645455635336</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Create package name for import">
+      <created>1646144448308</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1646144448308</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fix the bug in the first if in main.py">
+      <created>1646145447013</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1646145447013</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Just make the main of project and add a comment" />
+    <MESSAGE value="making the script 2 for the project" />
+    <MESSAGE value="making the script get wiki and making plot for the project" />
+    <MESSAGE value="importing the packages and  ask for file or subject to make wordcloud" />
+    <MESSAGE value="write if and elif and else is for creating wordcloud text" />
+    <MESSAGE value="creating script for geting text from wikipedia" />
+    <MESSAGE value="using the get_wiki script for get the text from wikipedia" />
+    <MESSAGE value="rename the file creat_wordcloud.py" />
+    <MESSAGE value="rename the file create_wordcloud.py" />
+    <MESSAGE value="remove the \n and punctuations and uninteresting words" />
+    <MESSAGE value="Wrote the mask or not for getting image or not and wrote the if and elif and else" />
+    <MESSAGE value="complete the part that if the user didn't want to mask wordcloud and made the part that we make plot for the wordcloud" />
+    <MESSAGE value="complete the part that if the user want to mask wordcloud" />
+    <MESSAGE value="add the else if user say anything else for answer y or n" />
+    <MESSAGE value="beautify the code" />
+    <MESSAGE value="Create package name for import" />
+    <MESSAGE value="fix the bug in the first if in main.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix the bug in the first if in main.py" />
+  </component>
+</project>
