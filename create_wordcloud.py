@@ -1,5 +1,5 @@
 # this script is for making wordcloud
-import wordcoud as wrc
+import wordcloud as wrc
 
 
 def create_cloud(text, bgcolor):
