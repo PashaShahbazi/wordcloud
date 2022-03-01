@@ -47,8 +47,8 @@ if mask_or_not.lower() == 'n':
     # create plot from word cloud
     plt.plot_cloud(cloud)
     mat.show()
-    # creat the image from word could
-    # save imag of the word cloud in save path
+    # create the image from word could
+    # save image of the word cloud in save path
     cloud.to_file(save_path.name)
     print('word cloud created!')
 elif mask_or_not.lower() == 'y':
