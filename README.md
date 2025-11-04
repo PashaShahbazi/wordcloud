@@ -1,4 +1,4 @@
-WordCloud Project
+# WordCloud Project
 
 Welcome to one of my first Python projects! This project was created as part of my initial learning journey in Python.
 Project Overview
