@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>WordCloud Generator</title>
+    <link rel="stylesheet" href="/static/styles.css" />
   </head>
 
   <body>
@@ -30,6 +31,28 @@
 
     <input type="number" id="width" value="800" min="100" max="3000" />
     <input type="number" id="height" value="600" min="100" max="3000" />
+
+    <br /><br />
+
+    <div class="mask-upload">
+      <div
+        id="maskDropZone"
+        class="mask-drop-zone"
+        role="button"
+        tabindex="0"
+        aria-label="Choose a PNG mask image"
+        aria-describedby="maskHelp"
+      >
+        <span id="maskDropPrompt">Drop a PNG mask here or click to browse.</span>
+      </div>
+      <input id="maskInput" type="file" accept="image/png,.png" hidden />
+      <small id="maskHelp">PNG only, maximum 5 MB and 3000×3000 pixels.</small>
+
+      <div id="selectedMask" class="selected-mask" aria-live="polite" hidden>
+        <span id="maskFileInfo"></span>
+        <button id="removeMaskButton" type="button">Remove</button>
+      </div>
+    </div>
 
     <br /><br />
     <button id="generateButton">Generate</button>
