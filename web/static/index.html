@@ -9,66 +9,150 @@
   </head>
 
   <body>
-    <h1>WordCloud Generator</h1>
+    <div class="app-shell">
+      <header class="app-header">
+        <p class="eyebrow">FastAPI + Vanilla JavaScript</p>
+        <h1>WordCloud Generator</h1>
+        <p class="app-description">
+          Turn your text into a custom WordCloud, with an optional PNG mask.
+        </p>
+      </header>
 
-    <textarea
-      id="textInput"
-      rows="10"
-      cols="60"
-      placeholder="Enter some text..."
-    ></textarea>
+      <main class="workspace">
+        <section class="panel controls-panel" aria-labelledby="controlsTitle">
+          <header class="panel-header">
+            <p class="step-label">Configure</p>
+            <h2 id="controlsTitle">Create your WordCloud</h2>
+            <p>Set the content, canvas, and optional shape.</p>
+          </header>
 
-    <br /><br />
+          <div class="field">
+            <label for="textInput">Source text</label>
+            <textarea
+              id="textInput"
+              rows="9"
+              placeholder="Paste or type your text here..."
+            ></textarea>
+          </div>
 
-    <label for="backgroundColor">background:</label>
-    <select id="backgroundColor">
-      <option value="black">Black</option>
-      <option value="white">White</option>
-      <option value="gray">Gray</option>
-      <option value="navy">Navy</option>
-    </select>
-    <br /><br />
+          <div class="field">
+            <label for="backgroundColor">Background color</label>
+            <select id="backgroundColor">
+              <option value="black">Black</option>
+              <option value="white">White</option>
+              <option value="gray">Gray</option>
+              <option value="navy">Navy</option>
+            </select>
+          </div>
 
-    <input type="number" id="width" value="800" min="100" max="3000" />
-    <input type="number" id="height" value="600" min="100" max="3000" />
+          <div class="dimension-grid">
+            <div class="field">
+              <label for="width">Width</label>
+              <div class="number-control">
+                <input
+                  type="number"
+                  id="width"
+                  value="800"
+                  min="100"
+                  max="3000"
+                />
+                <span>px</span>
+              </div>
+            </div>
 
-    <br /><br />
+            <div class="field">
+              <label for="height">Height</label>
+              <div class="number-control">
+                <input
+                  type="number"
+                  id="height"
+                  value="600"
+                  min="100"
+                  max="3000"
+                />
+                <span>px</span>
+              </div>
+            </div>
+          </div>
 
-    <div class="mask-upload">
-      <div
-        id="maskDropZone"
-        class="mask-drop-zone"
-        role="button"
-        tabindex="0"
-        aria-label="Choose a PNG mask image"
-        aria-describedby="maskHelp"
-      >
-        <span id="maskDropPrompt">Drop a PNG mask here or click to browse.</span>
-      </div>
-      <input id="maskInput" type="file" accept="image/png,.png" hidden />
-      <small id="maskHelp">PNG only, maximum 5 MB and 3000×3000 pixels.</small>
+          <div class="field mask-upload">
+            <div class="field-heading">
+              <span>Shape mask</span>
+              <span class="optional-label">Optional</span>
+            </div>
 
-      <div id="selectedMask" class="selected-mask" aria-live="polite" hidden>
-        <span id="maskFileInfo"></span>
-        <button id="removeMaskButton" type="button">Remove</button>
-      </div>
+            <div
+              id="maskDropZone"
+              class="mask-drop-zone"
+              role="button"
+              tabindex="0"
+              aria-label="Choose a PNG mask image"
+              aria-describedby="maskHelp"
+            >
+              <span class="upload-mark" aria-hidden="true">PNG</span>
+              <span id="maskDropPrompt">
+                Drop a PNG mask here or click to browse.
+              </span>
+            </div>
+            <input id="maskInput" type="file" accept="image/png,.png" hidden />
+            <small id="maskHelp">
+              Maximum 5 MB and 3000×3000 pixels.
+            </small>
+
+            <div
+              id="selectedMask"
+              class="selected-mask"
+              aria-live="polite"
+              hidden
+            >
+              <span id="maskFileInfo"></span>
+              <button id="removeMaskButton" type="button">Remove</button>
+            </div>
+          </div>
+
+          <button id="generateButton" class="primary-button" type="button">
+            Generate WordCloud
+          </button>
+          <p
+            id="status"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
+        </section>
+
+        <section class="panel preview-panel" aria-labelledby="previewTitle">
+          <header class="panel-header preview-header">
+            <div>
+              <p class="step-label">Preview</p>
+              <h2 id="previewTitle">Generated image</h2>
+            </div>
+            <span class="output-badge">PNG</span>
+          </header>
+
+          <div id="previewFrame" class="preview-frame">
+            <div id="previewEmpty" class="empty-state">
+              <span class="empty-state-mark" aria-hidden="true">W</span>
+              <h3>Your WordCloud will appear here</h3>
+              <p>Enter some text, adjust the options, and generate a preview.</p>
+            </div>
+            <img id="resultImage" alt="Generated WordCloud" hidden />
+          </div>
+
+          <div class="preview-actions">
+            <a
+              id="downloadLink"
+              class="download-link"
+              href=""
+              download="wordcloud.png"
+              hidden
+            >
+              Download PNG
+            </a>
+          </div>
+        </section>
+      </main>
     </div>
-
-    <br /><br />
-    <button id="generateButton">Generate</button>
-    <p id="status" role="status" aria-live="polite" aria-atomic="true"></p>
-
-    <br />
-
-    <img id="resultImage" alt="Generated WordCloud" />
-    <br />
-    <a
-      id="downloadLink"
-      class="download-link"
-      href=""
-      download="wordcloud.png"
-      hidden
-    >Download image</a>
 
     <script src="/static/app.js"></script>
   </body>

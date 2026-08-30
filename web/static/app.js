@@ -1,6 +1,8 @@
 const textInput = document.getElementById("textInput");
 const generateButton = document.getElementById("generateButton");
 const resultImage = document.getElementById("resultImage");
+const previewFrame = document.getElementById("previewFrame");
+const previewEmpty = document.getElementById("previewEmpty");
 const downloadLink = document.getElementById("downloadLink");
 const statusText = document.getElementById("status");
 const backgroundColor = document.getElementById("backgroundColor");
@@ -238,6 +240,9 @@ generateButton.addEventListener("click", async () => {
     const imageUrl = `${data.image_url}?t=${Date.now()}`;
 
     resultImage.src = imageUrl;
+    resultImage.hidden = false;
+    previewEmpty.hidden = true;
+    previewFrame.classList.add("has-result");
     downloadLink.href = imageUrl;
     downloadLink.hidden = false;
     setStatus("Done.", "success");
