@@ -1,19 +1,107 @@
 # WordCloud Project
 
-Welcome to one of my first Python projects! This project was created as part of my initial learning journey in Python.
-Project Overview
+This was one of my early Python projects, created while I was learning how to
+combine small modules, third-party packages, terminal input, and desktop file
+dialogs.
 
-This WordCloud project allows users to generate a word cloud from a given text. The user can provide their own text or fetch a text from Wikipedia. The generated word cloud is then overlaid onto a black and white image provided by the user.
-Features
+The program generates a WordCloud image from either a local text file or a
+Wikipedia article. An optional black-and-white image can be used as a mask to
+shape the result. The original project deliberately mixed terminal prompts
+with Tkinter file dialogs; that interaction style has been preserved.
 
-    Custom Text Input: Users can input a text that they want to visualize in the word cloud.
-    Wikipedia Text Fetching: Users can specify a topic, and the project will fetch related text from Wikipedia (note: this feature is currently experiencing issues and may need updates).
-    Image Overlay: Users can provide a black and white PNG image to serve as the shape for the word cloud.
-    Custom Output: Users can specify the location and name of the output file where the word cloud image will be saved.
+The repository has received focused cleanup for portability, dependency setup,
+error handling, and reliability. It is preserved primarily as a learning
+project, not as production software or a newly redesigned application.
 
-How It Works
+## Features
 
-    Input Text: The user provides a text or specifies a Wikipedia topic to fetch text from.
-    Input Image: The user provides a black and white PNG image to use as a mask for the word cloud.
-    Generate Word Cloud: The program generates a word cloud based on the input text and overlays it onto the provided image.
-    Save Output: The user specifies the output file's location and name, and the word cloud image is saved accordingly.
+- Read source text from a local text file.
+- Retrieve source text from a Wikipedia article.
+- Generate a WordCloud with a selectable background color.
+- Optionally shape the cloud with a PNG mask.
+- Save the generated image before displaying a Matplotlib preview.
+
+## Requirements
+
+- Python 3.12 (the cleaned project is verified on Python 3.12.3).
+- A desktop session for Tkinter file dialogs and the Matplotlib preview.
+- Tkinter, which is supplied by the operating system rather than PyPI.
+
+On Ubuntu, Pop!_OS, and related Linux distributions, Tkinter may need to be
+installed separately:
+
+```bash
+sudo apt install python3-tk
+```
+
+## Installation
+
+Create a local virtual environment and install the focused dependencies:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+The virtual environment is intentionally ignored by Git and should not be
+committed.
+
+## Run
+
+```bash
+python main.py
+```
+
+## Basic usage
+
+1. Choose `f` to select a text file or `w` to enter a Wikipedia subject.
+2. Choose whether to use an image mask.
+3. Enter a Matplotlib-compatible background color such as `white` or `black`.
+4. Choose the output filename in the save dialog.
+5. The image is saved, then displayed in a preview window.
+
+Canceling a file dialog exits that operation cleanly instead of producing a
+traceback.
+
+## Python dependencies
+
+The direct Python dependencies are listed in `requirements.txt`:
+
+- Matplotlib
+- NumPy
+- Pillow
+- wikipedia
+- wordcloud
+
+Tkinter is a system dependency and is not installed through
+`requirements.txt`.
+
+## Tests
+
+The focused test suite avoids automated desktop interaction. It tests text
+normalization, basic and masked WordCloud generation, import behavior, dialog
+cancellation through mocks, save ordering, plotting, and Wikipedia success and
+failure behavior through mocks.
+
+Run it with:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 MPLBACKEND=Agg python -m unittest discover -s tests -v
+```
+
+For a manual GUI smoke test, run `python main.py`, select a short UTF-8 text
+file, choose no mask, save a PNG, and confirm that the saved image and preview
+both appear.
+
+## Known limitations
+
+- The workflow still combines terminal prompts and Tkinter dialogs because
+  that is how the original project was designed.
+- A graphical desktop session is required for the interactive workflow.
+- The `wikipedia` package is old (`1.4.0`) and depends on Wikipedia's live API
+  and an internet connection. Page-not-found, disambiguation, and request
+  failures are reported cleanly, but upstream changes can still affect it.
+- A high-contrast black-and-white PNG works best as a mask.
+- The program is a small historical learning project and is not intended for
+  production workloads.

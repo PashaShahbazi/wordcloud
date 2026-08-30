@@ -2,6 +2,11 @@
 import wordcloud as wrc
 
 
+def _validate_text(text):
+    if not text or not text.strip():
+        raise ValueError("Text cannot be empty.")
+
+
 def create_cloud(text, bgcolor):
     """
     (text, str) -> cloud
@@ -9,6 +14,7 @@ def create_cloud(text, bgcolor):
     >>create_cloud('file.txt')
     cloud
     """
+    _validate_text(text)
     cloud = wrc.WordCloud(width=3000, height=2000,\
                           random_state=1, background_color=bgcolor, colormap='hsv',\
                           collocations=False, stopwords=wrc.STOPWORDS).generate(text)
@@ -22,6 +28,7 @@ def create_cloud_mask(text, bgcolor, mask):
     >>create_cloud('file.txt')
     arr
     """
+    _validate_text(text)
     cloud = wrc.WordCloud(width=3000, height=2000,\
                           random_state=1, background_color=bgcolor, colormap='hsv',\
                           collocations=False, stopwords=wrc.STOPWORDS, mask=mask).generate(text)
