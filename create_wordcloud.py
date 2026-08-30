@@ -7,7 +7,7 @@ def _validate_text(text):
         raise ValueError("Text cannot be empty.")
 
 
-def create_cloud(text, bgcolor, width, height):
+def create_cloud(text, bgcolor, width=3000, height=2000):
     """
     (text, str) -> cloud
     return the array of the word cloud for plt

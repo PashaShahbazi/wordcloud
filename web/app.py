@@ -51,7 +51,12 @@ async def health():
 async def wordcloud_api(data: WordCloudInput):
     output_path = GENERATED_DIR / "wordcloud.png"
 
-    cloud = create_cloud(data.text, data.background_color, data.height, data.width)
+    cloud = create_cloud(
+        data.text,
+        data.background_color,
+        width=data.width,
+        height=data.height,
+    )
 
     cloud.to_file(str(output_path))
 
