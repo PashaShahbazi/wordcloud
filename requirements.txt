@@ -1,5 +1,8 @@
+fastapi>=0.141.1,<1
+httpx>=0.28.1,<1
 matplotlib>=3.8.4,<4
 numpy>=1.26,<3
 Pillow>=10.4,<12
+uvicorn>=0.52.4,<1
 wikipedia==1.4.0
 wordcloud>=1.9.3,<2
