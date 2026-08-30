@@ -135,12 +135,82 @@ h1 {
 }
 
 .field label,
-.field-heading {
+.field-heading,
+.source-selector legend {
   color: #dce2ec;
   display: block;
   font-size: 0.82rem;
   font-weight: 650;
   margin-bottom: 0.5rem;
+}
+
+.source-selector {
+  border: 0;
+  margin: 0 0 1.1rem;
+  padding: 0;
+}
+
+.segmented-control {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 0.25rem;
+}
+
+.segmented-control label {
+  cursor: pointer;
+  position: relative;
+}
+
+.segmented-control input {
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 1px;
+}
+
+.segmented-control span {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.42rem;
+  color: var(--text-muted);
+  display: flex;
+  font-size: 0.78rem;
+  font-weight: 650;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0 0.7rem;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.segmented-control input:checked + span {
+  background: var(--surface-raised);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.segmented-control input:focus-visible + span {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgb(124 140 255 / 18%);
+}
+
+.source-panel {
+  min-height: 4.8rem;
+}
+
+.field-help {
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  margin-top: 0.45rem;
 }
 
 .field-heading {

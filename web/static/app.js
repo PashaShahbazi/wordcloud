@@ -8,6 +8,10 @@ const statusText = document.getElementById("status");
 const backgroundColor = document.getElementById("backgroundColor");
 const width = document.getElementById("width");
 const height = document.getElementById("height");
+const sourceModeInputs = document.querySelectorAll('input[name="sourceMode"]');
+const manualSourcePanel = document.getElementById("manualSourcePanel");
+const wikipediaSourcePanel = document.getElementById("wikipediaSourcePanel");
+const wikipediaSubject = document.getElementById("wikipediaSubject");
 const maskDropZone = document.getElementById("maskDropZone");
 const maskDropPrompt = document.getElementById("maskDropPrompt");
 const maskInput = document.getElementById("maskInput");
@@ -22,6 +26,16 @@ const GENERIC_ERROR_MESSAGE =
   "Something went wrong while generating the WordCloud.";
 
 let selectedMaskFile = null;
+
+function getSourceMode() {
+  return document.querySelector('input[name="sourceMode"]:checked').value;
+}
+
+function updateSourceMode() {
+  const wikipediaMode = getSourceMode() === "wikipedia";
+  manualSourcePanel.hidden = wikipediaMode;
+  wikipediaSourcePanel.hidden = !wikipediaMode;
+}
 
 function setStatus(message, state = "") {
   statusText.textContent = message;
@@ -191,11 +205,28 @@ removeMaskButton.addEventListener("click", () => {
   setStatus("Mask removed.");
 });
 
-generateButton.addEventListener("click", async () => {
-  const text = textInput.value.trim();
+sourceModeInputs.forEach((input) => {
+  input.addEventListener("change", updateSourceMode);
+});
+updateSourceMode();
 
-  if (!text) {
+generateButton.addEventListener("click", async () => {
+  const sourceMode = getSourceMode();
+  const text = textInput.value.trim();
+  const subject = wikipediaSubject.value.trim();
+
+  if (sourceMode === "text" && !text) {
     setStatus("Please enter some text.", "error");
+    return;
+  }
+
+  if (sourceMode === "wikipedia" && !subject) {
+    setStatus("Please enter a Wikipedia subject.", "error");
+    return;
+  }
+
+  if (sourceMode === "wikipedia" && subject.length > 200) {
+    setStatus("Wikipedia subject must be 200 characters or fewer.", "error");
     return;
   }
 
@@ -211,13 +242,24 @@ generateButton.addEventListener("click", async () => {
   }
 
   generateButton.disabled = true;
-  setStatus("Generating...", "loading");
+  const loadingMessage =
+    sourceMode === "wikipedia"
+      ? "Fetching Wikipedia article and generating..."
+      : "Generating...";
+  setStatus(loadingMessage, "loading");
 
   let errorMessage = GENERIC_ERROR_MESSAGE;
 
   try {
     const formData = new FormData();
-    formData.append("text", text);
+    formData.append("source_mode", sourceMode);
+
+    if (sourceMode === "wikipedia") {
+      formData.append("wikipedia_subject", subject);
+    } else {
+      formData.append("text", text);
+    }
+
     formData.append("background_color", backgroundColor.value);
     formData.append("width", String(outputWidth));
     formData.append("height", String(outputHeight));

@@ -26,13 +26,50 @@
             <p>Set the content, canvas, and optional shape.</p>
           </header>
 
-          <div class="field">
-            <label for="textInput">Source text</label>
-            <textarea
-              id="textInput"
-              rows="9"
-              placeholder="Paste or type your text here..."
-            ></textarea>
+          <fieldset class="source-selector">
+            <legend>Text source</legend>
+            <div class="segmented-control">
+              <label>
+                <input
+                  type="radio"
+                  name="sourceMode"
+                  value="text"
+                  checked
+                />
+                <span>Manual text</span>
+              </label>
+              <label>
+                <input type="radio" name="sourceMode" value="wikipedia" />
+                <span>Wikipedia</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div id="manualSourcePanel" class="source-panel">
+            <div class="field">
+              <label for="textInput">Source text</label>
+              <textarea
+                id="textInput"
+                rows="9"
+                placeholder="Paste or type your text here..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div id="wikipediaSourcePanel" class="source-panel" hidden>
+            <div class="field">
+              <label for="wikipediaSubject">Wikipedia subject</label>
+              <input
+                id="wikipediaSubject"
+                type="text"
+                maxlength="200"
+                autocomplete="off"
+                placeholder="For example: Python (programming language)"
+              />
+              <small class="field-help">
+                Uses an exact English Wikipedia article title.
+              </small>
+            </div>
           </div>
 
           <div class="field">
