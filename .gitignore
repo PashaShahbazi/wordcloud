@@ -27,3 +27,4 @@ Thumbs.db
 
 # Generated application output
 output/
+web/generated/

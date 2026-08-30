@@ -55,3 +55,12 @@
 #status[data-state="error"] {
   color: #b42318;
 }
+
+.download-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+}
+
+.download-link[hidden] {
+  display: none;
+}
