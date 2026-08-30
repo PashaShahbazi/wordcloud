@@ -1,10 +1,11 @@
 import unittest
 from io import BytesIO
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 import httpx
 from PIL import Image
 
+from get_wiki import WikipediaLookupError
 from web.app import GENERATED_DIR, app
 
 
@@ -158,6 +159,136 @@ class WebApiTests(unittest.IsolatedAsyncioTestCase):
             "Mask dimensions must not exceed 3000x3000 pixels.",
         )
         create_cloud_mask.assert_not_called()
+
+    @patch("web.app.create_cloud")
+    @patch("web.app.run_in_threadpool", new_callable=AsyncMock)
+    @patch("web.app.wiki_get")
+    async def test_wordcloud_generation_uses_normalized_wikipedia_text(
+        self,
+        wiki_get,
+        run_in_threadpool,
+        create_cloud,
+    ):
+        run_in_threadpool.return_value = (
+            "Python\n== History ==\nprogramming language"
+        )
+
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "source_mode": (None, "wikipedia"),
+                "wikipedia_subject": (None, "  Python  "),
+                "background_color": (None, "white"),
+                "width": (None, "640"),
+                "height": (None, "480"),
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        run_in_threadpool.assert_awaited_once_with(wiki_get, "Python")
+        create_cloud.assert_called_once_with(
+            "Python programming language",
+            "white",
+            width=640,
+            height=480,
+        )
+
+    @patch("web.app.create_cloud")
+    @patch("web.app.run_in_threadpool", new_callable=AsyncMock)
+    @patch("web.app.wiki_get")
+    async def test_wordcloud_generation_reports_wikipedia_lookup_error(
+        self,
+        wiki_get,
+        run_in_threadpool,
+        create_cloud,
+    ):
+        run_in_threadpool.side_effect = WikipediaLookupError(
+            "No Wikipedia page was found for 'missing'."
+        )
+
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "source_mode": (None, "wikipedia"),
+                "wikipedia_subject": (None, "missing"),
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.json()["detail"],
+            "No Wikipedia page was found for 'missing'.",
+        )
+        run_in_threadpool.assert_awaited_once_with(wiki_get, "missing")
+        create_cloud.assert_not_called()
+
+    @patch("web.app.run_in_threadpool", new_callable=AsyncMock)
+    async def test_wordcloud_generation_requires_wikipedia_subject(
+        self,
+        run_in_threadpool,
+    ):
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={"source_mode": (None, "wikipedia")},
+        )
+
+        self.assertEqual(response.status_code, 422)
+        self.assertEqual(
+            response.json()["detail"],
+            "Wikipedia subject cannot be empty.",
+        )
+        run_in_threadpool.assert_not_awaited()
+
+    @patch("web.app.run_in_threadpool", new_callable=AsyncMock)
+    async def test_wordcloud_generation_rejects_long_wikipedia_subject(
+        self,
+        run_in_threadpool,
+    ):
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "source_mode": (None, "wikipedia"),
+                "wikipedia_subject": (None, "x" * 201),
+            },
+        )
+
+        self.assertEqual(response.status_code, 422)
+        run_in_threadpool.assert_not_awaited()
+
+    async def test_wordcloud_generation_rejects_unknown_source_mode(self):
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "source_mode": (None, "file"),
+                "text": (None, "python learning word cloud"),
+            },
+        )
+
+        self.assertEqual(response.status_code, 422)
+
+    @patch("web.app.create_cloud")
+    @patch("web.app.run_in_threadpool", new_callable=AsyncMock)
+    async def test_wordcloud_generation_rejects_empty_wikipedia_article(
+        self,
+        run_in_threadpool,
+        create_cloud,
+    ):
+        run_in_threadpool.return_value = "  \n== Empty ==\n"
+
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "source_mode": (None, "wikipedia"),
+                "wikipedia_subject": (None, "Empty article"),
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.json()["detail"],
+            "The Wikipedia article did not contain any usable text.",
+        )
+        create_cloud.assert_not_called()
 
 
 if __name__ == "__main__":

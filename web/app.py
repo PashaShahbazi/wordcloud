@@ -1,13 +1,17 @@
 from io import BytesIO
 from pathlib import Path
+from typing import Literal
 
 import numpy as np
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import Image, UnidentifiedImageError
 
 from create_wordcloud import create_cloud, create_cloud_mask
+from get_wiki import WikipediaLookupError, wiki_get
+from text_processing import normalize_text
 
 
 app = FastAPI(title="WordCloud API")
@@ -79,19 +83,51 @@ def prepare_mask(mask_bytes, width, height):
         ) from error
 
 
+async def resolve_source_text(source_mode, text, wikipedia_subject):
+    if source_mode == "text":
+        if not text or not text.strip():
+            raise HTTPException(status_code=422, detail="Text cannot be empty.")
+        return text
+
+    if not wikipedia_subject or not wikipedia_subject.strip():
+        raise HTTPException(
+            status_code=422,
+            detail="Wikipedia subject cannot be empty.",
+        )
+
+    subject = wikipedia_subject.strip()
+
+    try:
+        article_text = await run_in_threadpool(wiki_get, subject)
+    except WikipediaLookupError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
+
+    normalized_text = normalize_text(article_text)
+    if not normalized_text:
+        raise HTTPException(
+            status_code=400,
+            detail="The Wikipedia article did not contain any usable text.",
+        )
+
+    return normalized_text
+
+
 @app.post("/api/wordcloud")
 async def wordcloud_api(
-    text: str = Form(min_length=1),
+    source_mode: Literal["text", "wikipedia"] = Form(default="text"),
+    text: str | None = Form(default=None),
+    wikipedia_subject: str | None = Form(default=None, max_length=200),
     background_color: str = Form(default="black"),
     width: int = Form(default=800, ge=100, le=3000),
     height: int = Form(default=600, ge=100, le=3000),
     mask: UploadFile | None = File(default=None),
 ):
     output_path = GENERATED_DIR / "wordcloud.png"
+    source_text = await resolve_source_text(source_mode, text, wikipedia_subject)
 
     if mask is None:
         cloud = create_cloud(
-            text,
+            source_text,
             background_color,
             width=width,
             height=height,
@@ -103,7 +139,7 @@ async def wordcloud_api(
             await mask.close()
 
         mask_array = prepare_mask(mask_bytes, width, height)
-        cloud = create_cloud_mask(text, background_color, mask_array)
+        cloud = create_cloud_mask(source_text, background_color, mask_array)
 
     cloud.to_file(str(output_path))
 
