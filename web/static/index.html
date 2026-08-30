@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>WordCloud Generator</title>
+  </head>
+
+  <body>
+    <h1>WordCloud Generator</h1>
+
+    <textarea
+      id="textInput"
+      rows="10"
+      cols="60"
+      placeholder="Enter some text..."
+    ></textarea>
+
+    <br /><br />
+
+    <label for="backgroundColor">background:</label>
+    <select id="backgroundColor">
+      <option value="black">Black</option>
+      <option value="white">White</option>
+      <option value="gray">Gray</option>
+      <option value="navy">Navy</option>
+    </select>
+    <br /><br />
+
+    <input type="number" id="width" value="800" min="100" max="3000" />
+    <input type="number" id="height" value="600" min="100" max="3000" />
+
+    <br /><br />
+    <button id="generateButton">Generate</button>
+    <p id="status"></p>
+
+    <br />
+
+    <img id="resultImage" alt="Generated WordCloud" />
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

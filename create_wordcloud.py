@@ -7,7 +7,7 @@ def _validate_text(text):
         raise ValueError("Text cannot be empty.")
 
 
-def create_cloud(text, bgcolor):
+def create_cloud(text, bgcolor, width, height):
     """
     (text, str) -> cloud
     return the array of the word cloud for plt
@@ -15,9 +15,15 @@ def create_cloud(text, bgcolor):
     cloud
     """
     _validate_text(text)
-    cloud = wrc.WordCloud(width=3000, height=2000,\
-                          random_state=1, background_color=bgcolor, colormap='hsv',\
-                          collocations=False, stopwords=wrc.STOPWORDS).generate(text)
+    cloud = wrc.WordCloud(
+        width=width,
+        height=height,
+        random_state=1,
+        background_color=bgcolor,
+        colormap="hsv",
+        collocations=False,
+        stopwords=wrc.STOPWORDS,
+    ).generate(text)
     return cloud
 
 
@@ -29,7 +35,14 @@ def create_cloud_mask(text, bgcolor, mask):
     arr
     """
     _validate_text(text)
-    cloud = wrc.WordCloud(width=3000, height=2000,\
-                          random_state=1, background_color=bgcolor, colormap='hsv',\
-                          collocations=False, stopwords=wrc.STOPWORDS, mask=mask).generate(text)
+    cloud = wrc.WordCloud(
+        width=3000,
+        height=2000,
+        random_state=1,
+        background_color=bgcolor,
+        colormap="hsv",
+        collocations=False,
+        stopwords=wrc.STOPWORDS,
+        mask=mask,
+    ).generate(text)
     return cloud
