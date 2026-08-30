@@ -1,9 +1,17 @@
 import unittest
+from io import BytesIO
 from unittest.mock import patch
 
 import httpx
+from PIL import Image
 
 from web.app import GENERATED_DIR, app
+
+
+def image_bytes(image_format, size=(120, 120)):
+    output = BytesIO()
+    Image.new("L", size, color=0).save(output, format=image_format)
+    return output.getvalue()
 
 
 class WebApiTests(unittest.IsolatedAsyncioTestCase):
@@ -67,6 +75,89 @@ class WebApiTests(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(response.status_code, 422)
         create_cloud.assert_not_called()
+
+    @patch("web.app.create_cloud")
+    @patch("web.app.create_cloud_mask")
+    async def test_wordcloud_generation_resizes_png_mask(
+        self,
+        create_cloud_mask,
+        create_cloud,
+    ):
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "text": (None, "python learning word cloud"),
+                "background_color": (None, "white"),
+                "width": (None, "640"),
+                "height": (None, "480"),
+                "mask": ("mask.png", image_bytes("PNG"), "image/png"),
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        create_cloud.assert_not_called()
+
+        text, background_color, mask = create_cloud_mask.call_args.args
+        self.assertEqual(text, "python learning word cloud")
+        self.assertEqual(background_color, "white")
+        self.assertEqual(mask.shape, (480, 640))
+        create_cloud_mask.return_value.to_file.assert_called_once_with(
+            str(GENERATED_DIR / "wordcloud.png")
+        )
+
+    @patch("web.app.create_cloud_mask")
+    async def test_wordcloud_generation_rejects_non_png_mask(
+        self,
+        create_cloud_mask,
+    ):
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "text": (None, "python learning word cloud"),
+                "mask": ("mask.jpg", image_bytes("JPEG"), "image/jpeg"),
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["detail"], "Mask image must be a PNG file.")
+        create_cloud_mask.assert_not_called()
+
+    @patch("web.app.MAX_MASK_BYTES", 10)
+    @patch("web.app.create_cloud_mask")
+    async def test_wordcloud_generation_rejects_oversized_mask_file(
+        self,
+        create_cloud_mask,
+    ):
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "text": (None, "python learning word cloud"),
+                "mask": ("mask.png", b"x" * 11, "image/png"),
+            },
+        )
+
+        self.assertEqual(response.status_code, 413)
+        create_cloud_mask.assert_not_called()
+
+    @patch("web.app.create_cloud_mask")
+    async def test_wordcloud_generation_rejects_oversized_mask_dimensions(
+        self,
+        create_cloud_mask,
+    ):
+        response = await self.client.post(
+            "/api/wordcloud",
+            files={
+                "text": (None, "python learning word cloud"),
+                "mask": ("mask.png", image_bytes("PNG", (3001, 1)), "image/png"),
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.json()["detail"],
+            "Mask dimensions must not exceed 3000x3000 pixels.",
+        )
+        create_cloud_mask.assert_not_called()
 
 
 if __name__ == "__main__":
