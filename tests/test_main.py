@@ -28,13 +28,6 @@ class MainModuleTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout, "")
 
-    def test_normalize_text_preserves_word_boundaries(self):
-        import main
-
-        text = "First line\nsecond line\r\n\n== Heading ==\nthird line"
-
-        self.assertEqual(main.normalize_text(text), "First line second line third line")
-
     def test_read_text_file_uses_the_selected_path(self):
         import main
 

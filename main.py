@@ -1,6 +1,5 @@
 """Generate a word cloud from a text file or Wikipedia article."""
 
-import re
 from pathlib import Path
 
 import matplotlib.pyplot as mat
@@ -10,12 +9,7 @@ from PIL import Image
 import create_wordcloud as cw
 import get_wiki as gw
 import make_plot as plt
-
-
-def normalize_text(text):
-    """Remove Wikipedia headings and normalize whitespace between words."""
-    text = re.sub(r"==.*?==+", " ", text)
-    return " ".join(text.split())
+from text_processing import normalize_text
 
 
 def read_text_file(path):
