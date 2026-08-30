@@ -1,18 +1,10 @@
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, Field
 
 from create_wordcloud import create_cloud
-
-
-class WordCloudInput(BaseModel):
-    text: str = Field(min_length=1)
-    background_color: str = "black"
-    width: int = Field(default=800, ge=100, le=3000)
-    height: int = Field(default=600, ge=100, le=3000)
 
 
 app = FastAPI(title="WordCloud API")
@@ -48,14 +40,19 @@ async def health():
 
 
 @app.post("/api/wordcloud")
-async def wordcloud_api(data: WordCloudInput):
+async def wordcloud_api(
+    text: str = Form(min_length=1),
+    background_color: str = Form(default="black"),
+    width: int = Form(default=800, ge=100, le=3000),
+    height: int = Form(default=600, ge=100, le=3000),
+):
     output_path = GENERATED_DIR / "wordcloud.png"
 
     cloud = create_cloud(
-        data.text,
-        data.background_color,
-        width=data.width,
-        height=data.height,
+        text,
+        background_color,
+        width=width,
+        height=height,
     )
 
     cloud.to_file(str(output_path))
@@ -63,6 +60,6 @@ async def wordcloud_api(data: WordCloudInput):
     return {
         "success": True,
         "image_url": "/generated/wordcloud.png",
-        "width": data.width,
-        "height": data.height,
+        "width": width,
+        "height": height,
     }

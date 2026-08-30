@@ -18,21 +18,15 @@ generateButton.addEventListener("click", async () => {
   statusText.textContent = "Generating...";
 
   try {
-    const payload = {
-      text: text,
-      background_color: backgroundColor.value,
-      width: Number(width.value),
-      height: Number(height.value),
-    };
+    const formData = new FormData();
+    formData.append("text", text);
+    formData.append("background_color", backgroundColor.value);
+    formData.append("width", width.value);
+    formData.append("height", height.value);
 
     const response = await fetch("/api/wordcloud", {
       method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify(payload),
+      body: formData,
     });
 
     if (!response.ok) {

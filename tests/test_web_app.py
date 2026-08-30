@@ -27,11 +27,11 @@ class WebApiTests(unittest.IsolatedAsyncioTestCase):
     async def test_wordcloud_generation_uses_request_data(self, create_cloud):
         response = await self.client.post(
             "/api/wordcloud",
-            json={
-                "text": "python learning word cloud",
-                "background_color": "white",
-                "width": 640,
-                "height": 480,
+            files={
+                "text": (None, "python learning word cloud"),
+                "background_color": (None, "white"),
+                "width": (None, "640"),
+                "height": (None, "480"),
             },
         )
 
@@ -59,7 +59,10 @@ class WebApiTests(unittest.IsolatedAsyncioTestCase):
     async def test_wordcloud_generation_rejects_empty_text(self, create_cloud):
         response = await self.client.post(
             "/api/wordcloud",
-            json={"text": "", "background_color": "white"},
+            files={
+                "text": (None, ""),
+                "background_color": (None, "white"),
+            },
         )
 
         self.assertEqual(response.status_code, 422)
