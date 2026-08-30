@@ -15,8 +15,54 @@ const removeMaskButton = document.getElementById("removeMaskButton");
 const MAX_MASK_BYTES = 5 * 1024 * 1024;
 const MAX_MASK_DIMENSION = 3000;
 const PNG_SIGNATURE = [137, 80, 78, 71, 13, 10, 26, 10];
+const GENERIC_ERROR_MESSAGE =
+  "Something went wrong while generating the WordCloud.";
 
 let selectedMaskFile = null;
+
+function setStatus(message, state = "") {
+  statusText.textContent = message;
+
+  if (state) {
+    statusText.dataset.state = state;
+  } else {
+    delete statusText.dataset.state;
+  }
+}
+
+function parseDimension(input, label) {
+  const value = Number(input.value);
+
+  if (!Number.isInteger(value) || value < 100 || value > 3000) {
+    throw new Error(`${label} must be a whole number between 100 and 3000.`);
+  }
+
+  return value;
+}
+
+async function getResponseErrorMessage(response) {
+  try {
+    const data = await response.json();
+
+    if (typeof data.detail === "string" && data.detail.trim()) {
+      return data.detail;
+    }
+
+    if (Array.isArray(data.detail)) {
+      const messages = data.detail
+        .map((error) => error.msg)
+        .filter((message) => typeof message === "string" && message.trim());
+
+      if (messages.length) {
+        return messages.join(" ");
+      }
+    }
+  } catch (error) {
+    console.error("Unable to read the error response.", error);
+  }
+
+  return GENERIC_ERROR_MESSAGE;
+}
 
 function formatFileSize(bytes) {
   if (bytes < 1024) {
@@ -89,10 +135,14 @@ async function selectMaskFile(file) {
     selectedMask.hidden = false;
     maskDropZone.classList.add("has-file");
     maskDropPrompt.textContent = "Drop another PNG here or click to replace.";
-    statusText.textContent = "Mask selected.";
+    setStatus("Mask selected.", "success");
   } catch (error) {
     clearMaskSelection();
-    statusText.textContent = error.message;
+    const message =
+      error instanceof Error
+        ? error.message
+        : "The selected mask could not be validated.";
+    setStatus(message, "error");
   }
 }
 
@@ -135,26 +185,39 @@ maskDropZone.addEventListener("drop", (event) => {
 
 removeMaskButton.addEventListener("click", () => {
   clearMaskSelection();
-  statusText.textContent = "Mask removed.";
+  setStatus("Mask removed.");
 });
 
 generateButton.addEventListener("click", async () => {
   const text = textInput.value.trim();
 
   if (!text) {
-    statusText.textContent = "Please enter some text.";
+    setStatus("Please enter some text.", "error");
+    return;
+  }
+
+  let outputWidth;
+  let outputHeight;
+
+  try {
+    outputWidth = parseDimension(width, "Width");
+    outputHeight = parseDimension(height, "Height");
+  } catch (error) {
+    setStatus(error.message, "error");
     return;
   }
 
   generateButton.disabled = true;
-  statusText.textContent = "Generating...";
+  setStatus("Generating...", "loading");
+
+  let errorMessage = GENERIC_ERROR_MESSAGE;
 
   try {
     const formData = new FormData();
     formData.append("text", text);
     formData.append("background_color", backgroundColor.value);
-    formData.append("width", width.value);
-    formData.append("height", height.value);
+    formData.append("width", String(outputWidth));
+    formData.append("height", String(outputHeight));
 
     if (selectedMaskFile) {
       formData.append("mask", selectedMaskFile, selectedMaskFile.name);
@@ -166,18 +229,17 @@ generateButton.addEventListener("click", async () => {
     });
 
     if (!response.ok) {
+      errorMessage = await getResponseErrorMessage(response);
       throw new Error(`Request failed with status ${response.status}`);
     }
 
     const data = await response.json();
 
     resultImage.src = `${data.image_url}?t=${Date.now()}`;
-    statusText.textContent = "Done.";
+    setStatus("Done.", "success");
   } catch (error) {
     console.error(error);
-
-    statusText.textContent =
-      "Something went wrong while generating the WordCloud.";
+    setStatus(errorMessage, "error");
   } finally {
     generateButton.disabled = false;
   }

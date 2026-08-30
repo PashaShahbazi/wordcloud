@@ -39,3 +39,19 @@
   cursor: pointer;
   padding: 0.25rem 0.75rem;
 }
+
+#status {
+  min-height: 1.5rem;
+}
+
+#status[data-state="loading"] {
+  color: #1d4ed8;
+}
+
+#status[data-state="success"] {
+  color: #18752d;
+}
+
+#status[data-state="error"] {
+  color: #b42318;
+}
